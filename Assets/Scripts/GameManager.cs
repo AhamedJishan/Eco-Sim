@@ -1,10 +1,11 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	[SerializeField] private float speedUp = 1.0f;
+	[SerializeField] private int speedUp = 1;
 	[SerializeField] private Vector3 vec;
 
 	public int creatureCount;
@@ -67,4 +68,7 @@ public class GameManager : MonoBehaviour
 		if (samples.Count > 0)
 			avgCreatureCount = runningSum / (float)samples.Count;
 	}
+
+	public int GetTimeSpeedUp() { return speedUp; }
+	public void SetTimeSpeedUp(int speedUp) { this.speedUp = speedUp; }
 }
