@@ -4,7 +4,8 @@ using UnityEngine;
 public class RandomMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-	[SerializeField] private float speed;
+	[SerializeField] private float speed = 10f;
+	[SerializeField] private float angularSpeed = 2f;
 
     [SerializeField] private float directionChangeInterval = 1f;
 
@@ -39,7 +40,11 @@ public class RandomMovement : MonoBehaviour
 
 	private void Update()
 	{
-		transform.Translate(moveDirection * speed * Time.deltaTime);
+		// Move towards moveDirection
+		transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+		// Face toward moveDirection
+		Quaternion targetRotation = Quaternion.LookRotation(moveDirection, transform.up);
+		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, angularSpeed * Time.deltaTime);
 
 		Vector3 pos = transform.position;
 		pos.x = Mathf.Clamp(pos.x, -planeBounds.x, planeBounds.x);
