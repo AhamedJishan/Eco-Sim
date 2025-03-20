@@ -8,7 +8,7 @@ public class SpontaneousChanceBasedSpawner : MonoBehaviour
 	[Tooltip("Gameobject to spawn")]
 	[SerializeField] private GameObject spawnObject;
 
-    [SerializeField, Range(0,100)] private float spawnRate = 10f;
+    [SerializeField, Range(0,100)] private static float spawnRate = 10f;
 
 	[Tooltip("Optional: Half-extents of the plane along X and Z axis to constain Spawn Area.")]
 	[SerializeField] private Vector2 spawnAreaBounds = new Vector2(50f, 50f);
@@ -54,6 +54,6 @@ public class SpontaneousChanceBasedSpawner : MonoBehaviour
 		}
 	}
 
-	public float GetSpawnRate() { return spawnRate; }
-	public void SetSpawnRate(int rate) { spawnRate =  rate; }
+	public static float GetSpawnRate() { return spawnRate; }
+	public static void SetSpawnRate(int rate) { spawnRate =  rate; }
 }

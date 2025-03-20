@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class SpontaneousChanceBasedDestroyer : MonoBehaviour
 {
-	[SerializeField, Range(0, 100)] private int destructionRate = 10;
+	[SerializeField, Range(0, 100)] private static int destructionRate = 10;
 
 	private float timeElapsed;
 
@@ -26,6 +26,6 @@ public class SpontaneousChanceBasedDestroyer : MonoBehaviour
 		}
 	}
 
-	public int GetDestructionRate() { return destructionRate; }
-	public void SetDestructionRate(int rate) { destructionRate = rate; }
+	public static int GetDestructionRate() { return destructionRate; }
+	public static void SetDestructionRate(int rate) { destructionRate = rate; }
 }

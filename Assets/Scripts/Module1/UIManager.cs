@@ -22,8 +22,8 @@ public class UIManager : MonoBehaviour
 	private void Start()
 	{
 		timeMultiplierIF.text = gameManager.GetTimeSpeedUp().ToString();
-		statBirthChanceIF.text = spawner.GetSpawnRate().ToString();
-		statDeathChanceIF.text = destroyer.GetDestructionRate().ToString();
+		statBirthChanceIF.text = SpontaneousChanceBasedSpawner.GetSpawnRate().ToString();
+		statDeathChanceIF.text = SpontaneousChanceBasedDestroyer.GetDestructionRate().ToString();
 	}
 
 	private void Update()
@@ -33,11 +33,11 @@ public class UIManager : MonoBehaviour
 
 		int spawnRate = ValidateIntInput(statBirthChanceIF.text, 0, 100);
 		statBirthChanceIF.text = spawnRate.ToString();
-		spawner.SetSpawnRate(spawnRate);
+		SpontaneousChanceBasedSpawner.SetSpawnRate(spawnRate);
 
 		int deathRate = ValidateIntInput(statDeathChanceIF.text, 0, 100);
 		statDeathChanceIF.text = deathRate.ToString();
-		destroyer.SetDestructionRate(deathRate);
+		SpontaneousChanceBasedDestroyer.SetDestructionRate(deathRate);
 
 		int timeMultiplier = ValidateIntInput(timeMultiplierIF.text, 0, 100);
 		timeMultiplierIF.text = timeMultiplier.ToString();
@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
 
 		if (analysisPanel.active)
 		{
-			analysisOutputText.text = "= " + spawner.GetSpawnRate()/destroyer.GetDestructionRate();
+			analysisOutputText.text = "= " + SpontaneousChanceBasedSpawner.GetSpawnRate()/SpontaneousChanceBasedDestroyer.GetDestructionRate();
 		}
 	}
 
