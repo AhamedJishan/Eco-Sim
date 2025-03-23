@@ -3,50 +3,46 @@ using UnityEngine;
 
 public class M2_UIManager : MonoBehaviour
 {
-	[Header("UI References")]
-	[SerializeField] private TMP_InputField timeMultiplierIF;
-	[SerializeField] private TMP_InputField statBirthChanceIF;
-	[SerializeField] private TMP_InputField statDeathChanceIF;
-	[SerializeField] private TextMeshProUGUI statTotalText;
-	[SerializeField] private TextMeshProUGUI statAverageText;
+	[SerializeField] private M2_SimulationManager simulationManager;
 
-	[Header("Other References")]
-	[SerializeField] private SpontaneousChanceBasedSpawner spawner;
-	[SerializeField] private SpontaneousChanceBasedDestroyer destroyer;
-	[SerializeField] private M2_GameManager gameManager;
+	[Header("Stats Panel")]
+    [SerializeField] private TMP_InputField birthChanceIF;
+	[SerializeField] private TMP_InputField replicationChanceIF;
+	[SerializeField] private TMP_InputField deathChanceIF;
+	[SerializeField] private TMP_Text totalCountText;
+	[SerializeField] private TMP_Text avgCountText;
 
-	[Header("Analysis References")]
-	[SerializeField] private GameObject analysisPanel;
-	[SerializeField] private TextMeshProUGUI analysisOutputText;
+	[Header("Time Panel")]
+	[SerializeField] private TMP_InputField timescaleIF;
 
 	private void Start()
 	{
-		timeMultiplierIF.text = gameManager.GetTimeSpeedUp().ToString();
-		statBirthChanceIF.text = SpontaneousChanceBasedSpawner.GetSpawnRate().ToString();
-		statDeathChanceIF.text = SpontaneousChanceBasedDestroyer.GetDestructionRate().ToString();
+		timescaleIF.text = 1.ToString();
+		birthChanceIF.text = simulationManager.birthChance.ToString();
+		replicationChanceIF.text = simulationManager.replicationChance.ToString();
+		deathChanceIF.text = simulationManager.deathChance.ToString();
 	}
 
 	private void Update()
 	{
-		statTotalText.text = ": " + gameManager.creatureCount.ToString();
-		statAverageText.text = ": " + gameManager.avgCreatureCount.ToString();
+		int timeScale = ValidateIntInput(timescaleIF.text, 0, 100);
+		Time.timeScale = timeScale;
+		timescaleIF.text = timeScale.ToString();
 
-		int spawnRate = ValidateIntInput(statBirthChanceIF.text, 0, 100);
-		statBirthChanceIF.text = spawnRate.ToString();
-		SpontaneousChanceBasedSpawner.SetSpawnRate(spawnRate);
+		totalCountText.text = simulationManager.creatureCount.ToString();
+		avgCountText.text = simulationManager.avgCreatureCount.ToString();
 
-		int deathRate = ValidateIntInput(statDeathChanceIF.text, 0, 100);
-		statDeathChanceIF.text = deathRate.ToString();
-		SpontaneousChanceBasedDestroyer.SetDestructionRate(deathRate);
+		int birthChance = ValidateIntInput(birthChanceIF.text, 0, 100);
+		simulationManager.birthChance = birthChance;
+		birthChanceIF.text = birthChance.ToString();
 
-		int timeMultiplier = ValidateIntInput(timeMultiplierIF.text, 0, 100);
-		timeMultiplierIF.text = timeMultiplier.ToString();
-		gameManager.SetTimeSpeedUp(timeMultiplier);
+		int deathChance = ValidateIntInput(deathChanceIF.text, 0, 100);
+		simulationManager.deathChance = deathChance;
+		deathChanceIF.text = deathChance.ToString();
 
-		if (analysisPanel.active)
-		{
-			analysisOutputText.text = "= " + SpontaneousChanceBasedSpawner.GetSpawnRate()/SpontaneousChanceBasedDestroyer.GetDestructionRate();
-		}
+		int replicationChance = ValidateIntInput(replicationChanceIF.text, 0, 100);
+		simulationManager.replicationChance = replicationChance;
+		replicationChanceIF.text = replicationChance.ToString();
 	}
 
 	private int ValidateIntInput(string input, int minValue, int maxValue)
@@ -55,10 +51,5 @@ public class M2_UIManager : MonoBehaviour
 		if (int.TryParse(input, out number))
 			number = Mathf.Clamp(number, minValue, maxValue);
 		return number;
-	}
-
-	public void OnAnalysisButtonPressed()
-	{
-		analysisPanel.SetActive(!analysisPanel.active);
 	}
 }
