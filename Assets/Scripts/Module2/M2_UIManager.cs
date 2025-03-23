@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class M2_UIManager : MonoBehaviour
 {
 	[Header("UI References")]
 	[SerializeField] private TMP_InputField timeMultiplierIF;
@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 	[Header("Other References")]
 	[SerializeField] private SpontaneousChanceBasedSpawner spawner;
 	[SerializeField] private SpontaneousChanceBasedDestroyer destroyer;
-	[SerializeField] private GameManager gameManager;
+	[SerializeField] private M2_GameManager gameManager;
 
 	[Header("Analysis References")]
 	[SerializeField] private GameObject analysisPanel;
