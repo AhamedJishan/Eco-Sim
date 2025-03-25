@@ -16,6 +16,7 @@ public class M2_UIManager : MonoBehaviour
 	[SerializeField] private TMP_InputField timescaleIF;
 
 	[Header("Analysis Panel")]
+	[SerializeField] private GameObject analysisPanel;
 	[SerializeField] private TMP_Text analysisEquationText;
 	[SerializeField] private TMP_Text analysisResultText;
 
@@ -74,5 +75,10 @@ public class M2_UIManager : MonoBehaviour
 		if (int.TryParse(input, out number))
 			number = Mathf.Clamp(number, minValue, maxValue);
 		return number;
+	}
+
+	public void OnAnalysisButtonPressed()
+	{
+		analysisPanel.active = !analysisPanel.active;
 	}
 }
