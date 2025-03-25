@@ -15,16 +15,23 @@ public class M2_UIManager : MonoBehaviour
 	[Header("Time Panel")]
 	[SerializeField] private TMP_InputField timescaleIF;
 
+	[Header("Analysis Panel")]
+	[SerializeField] private TMP_Text analysisEquationText;
+	[SerializeField] private TMP_Text analysisResultText;
+
 	private void Start()
 	{
 		timescaleIF.text = 1.ToString();
 		birthChanceIF.text = simulationManager.birthChance.ToString();
 		replicationChanceIF.text = simulationManager.replicationChance.ToString();
 		deathChanceIF.text = simulationManager.deathChance.ToString();
+		AnalysisPanel((int)simulationManager.birthChance,
+			(int)simulationManager.deathChance, (int)simulationManager.replicationChance);
 	}
 
 	private void Update()
 	{
+		// TIME
 		int timeScale = ValidateIntInput(timescaleIF.text, 0, 100);
 		Time.timeScale = timeScale;
 		timescaleIF.text = timeScale.ToString();
@@ -32,6 +39,7 @@ public class M2_UIManager : MonoBehaviour
 		totalCountText.text = simulationManager.creatureCount.ToString();
 		avgCountText.text = simulationManager.avgCreatureCount.ToString();
 
+		// STATS
 		int birthChance = ValidateIntInput(birthChanceIF.text, 0, 100);
 		simulationManager.birthChance = birthChance;
 		birthChanceIF.text = birthChance.ToString();
@@ -43,6 +51,21 @@ public class M2_UIManager : MonoBehaviour
 		int replicationChance = ValidateIntInput(replicationChanceIF.text, 0, 100);
 		simulationManager.replicationChance = replicationChance;
 		replicationChanceIF.text = replicationChance.ToString();
+
+		// ANALYSIS
+		AnalysisPanel(birthChance, deathChance, replicationChance);
+	}
+
+	private void AnalysisPanel(int birthChance, int deathChance, int replicationChance)
+	{
+		analysisEquationText.text = "   =" + birthChance.ToString()
+			+ "/(" + deathChance.ToString() + "-" + replicationChance.ToString() + ")";
+
+		float analysedResultDenominator = deathChance - replicationChance;
+		if (analysedResultDenominator == 0)
+			analysisResultText.text = "Inf.";
+		else
+			analysisResultText.text = "=" + (birthChance / analysedResultDenominator).ToString();
 	}
 
 	private int ValidateIntInput(string input, int minValue, int maxValue)

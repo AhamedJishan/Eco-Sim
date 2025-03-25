@@ -42,8 +42,11 @@ public class M2_SimulationManager : MonoBehaviour
 				M2_Creature.deathChance = deathChance;
 				M2_Creature.cycleDuration = cycleDuration;
 
-				spawner.Spawn(creature);
-				CreatureBorn();
+				if (Random.Range(1, 100) <= birthChance)
+				{
+					spawner.Spawn(creature);
+					CreatureBorn();
+				}
 			}
 			else
 			{
